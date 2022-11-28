@@ -22,13 +22,7 @@ public class UserService {
                     throw new HospitalReviewAppException(DUPLICATED_USER_NAME, "User already exists");
                 });
 
-        User user = User.builder()
-                .userName(userJoinRequest.getUserName())
-                .password(userJoinRequest.getPassword())
-                .email(userJoinRequest.getEmail())
-                .build();
-
-        User savedUser = userRepository.save(user);
+        User savedUser = userRepository.save(userJoinRequest.toEntity());
         return UserDto.builder()
                 .id(savedUser.getId())
                 .userName(savedUser.getUserName())
