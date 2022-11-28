@@ -18,7 +18,8 @@ public class UserService {
 
     public UserDto join(UserJoinRequest userJoinRequest) {
         userRepository.findByUserName(userJoinRequest.getUserName())
-                .ifPresent(user -> { throw new HospitalReviewAppException(DUPLICATED_USER_NAME, "User already exists");
+                .ifPresent(user -> {
+                    throw new HospitalReviewAppException(DUPLICATED_USER_NAME, "User already exists");
                 });
 
         User user = User.builder()
