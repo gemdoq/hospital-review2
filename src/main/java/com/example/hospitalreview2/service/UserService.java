@@ -3,9 +3,13 @@ package com.example.hospitalreview2.service;
 import com.example.hospitalreview2.domain.dto.UserDto;
 import com.example.hospitalreview2.domain.dto.UserJoinRequest;
 import com.example.hospitalreview2.domain.entity.User;
+import com.example.hospitalreview2.exception.ErrorCode;
+import com.example.hospitalreview2.exception.HospitalReviewAppException;
 import com.example.hospitalreview2.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import static com.example.hospitalreview2.exception.ErrorCode.DUPLICATED_USER_NAME;
 
 @Service
 @RequiredArgsConstructor
@@ -14,7 +18,7 @@ public class UserService {
 
     public UserDto join(UserJoinRequest userJoinRequest) {
         userRepository.findByUserName(userJoinRequest.getUserName())
-                .ifPresent(user -> { throw new RuntimeException("해당 UserName이 중복됩니다.");
+                .ifPresent(user -> { throw new HospitalReviewAppException(DUPLICATED_USER_NAME, "User already exists");
                 });
 
         User user = User.builder()
