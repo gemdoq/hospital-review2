@@ -12,3 +12,6 @@ spring:
     url: localhost
     username: root
     password: password
+jwt:
+  token:
+    secret: hello
